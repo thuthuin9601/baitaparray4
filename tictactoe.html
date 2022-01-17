@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Caro Game Simple</h3>
+    <p id="carogame"></p>
+    <input type='button' value='Change changeValue1' onclick='changeValue1()'>
+    <input type='button' value='Change changeValue2' onclick='changeValue2()'>
+</body>
+</body>
+</html>
+<script>
+    let b=document.getElementById('carogame');
+    let board=[];
+    let data='';
+    for(let i=0; i<5;i++){
+        board[i]=['_','_','_','_','_'];
+    }
+    for (let i = 0; i < 5; i++) {
+    data += "<br/>";
+    for (let j = 0; j < 5; j++) {
+        data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+    }
+    }
+    data += "<br/><br/>"
+    b.innerHTML = data;
+    function changeValue1() {
+    let positionX1 = Number(prompt("X1: "));
+    let positionY1 = Number(prompt("Y1: "));
+    data = "";
+    board[positionX1][positionY1] = "x";//liệu như này đã thay thế value chưa???
+    for (let i = 0; i < 5; i++) {
+        data += "<br/>";
+        for (let j = 0; j < 5; j++) {//mục đích của cái này là gì, tại sao phải viết lại???
+            data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+        }
+    }
+    data += "<br/><br/>"
+    b.innerHTML = "<hr/>" + data;
+    checkValue(positionX1,positionY1);
+    } 
+    function changeValue2() {
+    let positionX2 = Number(prompt("X2: ")) ;
+    let positionY2 = Number(prompt("Y2: ")) ;
+    data = "";
+    board[positionX2][positionY2] = "o";
+    for (let i = 0; i < 5; i++) {
+        data += "<br/>";
+        for (let j = 0; j < 5; j++) {
+            data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+        }
+    }
+    data += "<br/><br/>"
+    b.innerHTML = "<hr/>" + data;
+    checkValue(positionX2,positionY2);
+    } 
+    function checkValue(x,y){
+        let cell=board[x][y];
+        //Horizon
+        let count=1;
+        let i=1;
+        while((y + i <5) && (board[x][y + i] ==='x')){
+            count++;
+            i++;
+        }
+        while((y + i <5) && (board[x][y + i] ==='o')){
+            count++;
+            i++;
+        }
+        i = 1;
+        while((y - i >= 0) && board[x][y - i]=== 'x'){
+            count++;
+            i++;
+        }
+        while((y - i >= 0) && board[x][y - i]=== 'o'){
+            count++;
+            i++;
+        }
+        endGame(count);
+        //Vertical
+        count = 1;
+        i = 1;
+        while((x + i < 5) &&board[x + i][y] === 'x'){
+            count++;
+            i++;
+        }
+        while((x + i < 5) &&board[x + i][y] === 'o'){
+            count++;
+            i++;
+        }
+        i = 1;
+        while((x - i >= 0) &&board[x - i][y] === 'x'){
+            count++;
+            i++;
+        }
+        while((x - i >= 0) &&board[x - i][y] === 'o'){
+            count++;
+            i++;
+        }
+        this.endGame(count);
+        //Left diagonal
+        count = 1;
+        i = 1;
+        j = 1;
+        while((y + i < 5) && (x + i < 5) && board[x + i][y + j] === 'x'){
+            count++;
+            i++;
+            j++;
+        }
+        while((y + i < 5) && (x + i < 5) && board[x + i][y + j] === 'o'){
+            count++;
+            i++;
+            j++;
+        }
+        i = 1;
+        j = 1;
+        while((x - i >= 0) && (y - j >= 0) && board[x - i][y - j] === 'x'){
+            count++;
+            i++;
+            j++;
+        }
+        while((x - i >= 0) && (y - j >= 0) && board[x - i][y - j] === 'o'){
+            count++;
+            i++;
+            j++;
+        }
+        this.endGame(count);
+        //Right diagonal
+        count = 1;
+        i = 1;
+        j = 1;
+        while((y + j < 5) && (x - i >= 0) && board[x - i][y + j] === 'x'){
+            count++;
+            i++;
+            j++;
+        }
+        while((y + j < 5) && (x - i >= 0) && board[x - i][y + j] === 'o'){
+            count++;
+            i++;
+            j++;
+        }
+        i = 1;
+        j = 1;
+        while((y - j >= 0) && (x + i < 5) && board[x + i][y - j] === 'x'){
+            count++;
+            i++;
+            j++;
+        }
+        while((y - j >= 0) && (x + i < 5) && board[x + i][y - j] === 'o'){
+            count++;
+            i++;
+            j++;
+        }
+        this.endGame(count);
+    }    
+    function endGame(count){
+        if(count >= 3){
+            alert("You won!!!");
+        }
+    } 
+</script>
